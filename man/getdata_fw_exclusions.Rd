@@ -10,12 +10,14 @@ getdata_fw_exclusions(arg1)
 \item{arg1}{varible passed into SQL select statement to pull data and name data frame}
 }
 \description{
-creates flowing waters exclusions dataframe from oracle data pull
+Creates flowing waters exclusions dataframe from oracle data pull.
+User will be prompted for the password to the FDEP Oracle Database GWIS.
 }
 \details{
 Function to import exclusions into R dataframe from the FDEP Oracle Database GWIS
 }
 \examples{
-
 getdata_fw_exclusions('CN_EXCLUSIONS_2020')
+   entering 'CN_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status Canals
+   site exclusions for 2020 site visits.
 }
