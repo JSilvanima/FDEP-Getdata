@@ -2,7 +2,8 @@
 #'
 #' @title getdata_fw_exclusions
 #'
-#' @description creates flowing waters exclusions dataframe from oracle data pull
+#' @description Creates flowing waters exclusions dataframe from oracle data pull.
+#' User will be prompted for the password to the FDEP Oracle Database GWIS.
 #'
 #' @param arg1 varible passed into SQL select statement to pull data and name data frame
 #'
@@ -13,9 +14,10 @@
 #' @import splitstackshape
 #' @import stringr
 #' @export
-#' @examples
-#'
-#' getdata_fw_exclusions('CN_EXCLUSIONS_2020')
+#' @examples getdata_fw_exclusions('CN_EXCLUSIONS_2020')
+#'    entering 'CN_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status Canals
+#'    site exclusions for 2020 site visits.
+
 
 getdata_fw_exclusions <- function(arg1) {
 

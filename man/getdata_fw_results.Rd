@@ -7,14 +7,19 @@
 getdata_fw_results(arg2)
 }
 \arguments{
-\item{arg2}{varible passed into SQL select statement to pull data and name data frame}
+\item{arg2}{variable passed into SQL select statement to pull data and name data frame}
 }
 \description{
-creates flowing water results dataframe from oracle data pull
+Creates flowing water results dataframe from oracle data pull.
+User will be prompted for the password to the FDEP Oracle Database GWIS.
 }
 \details{
-Function to import exclusions into R dataframe from the FDEP Oracle Database GWIS
+Function to import results into R dataframe from the FDEP Oracle Database GWIS
 }
 \examples{
-getdata_fw_results("'CN2001'")
+getdata_fw_results("'CN18'") 
+   entering "'CN18'" for arg2 will produce a dataframe for FDEP Status Canals sampled in 2018.
+getdata_fw_results("'CN18','CN19','CN20'")
+   entering "'CN18','CN19','CN20'" for arg2 will produce a dataframe for FDEP Status Canals sampled 2018 - 2020.
+
 }

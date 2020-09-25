@@ -12,8 +12,11 @@ install("FDEPgetdata")
 
 getdata_fw_exclusions('CN_EXCLUSIONS_2020')
 
-getdata_fw_results("'CN2001'")
+getdata_fw_results("'CN18'")
 
 uninstall(pkg = "FDEPgetdata")
 
 uninstall.
+
+
+import(RODBC, RODM, dplyr, tidyr, splitstackshape, stringr)
