@@ -10,7 +10,7 @@ setwd("..")
 
 install("FDEPgetdata")
 
-getdata_fw_exclusions('CN_EXCLUSIONS_2020')
+getdata_aq_exclusions('Ca_EXCLUSIONS_2019')
 
 getdata_fw_results("'CN18'")
 
