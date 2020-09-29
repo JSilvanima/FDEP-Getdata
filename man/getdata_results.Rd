@@ -10,7 +10,7 @@ getdata_results(arg2)
 \item{arg2}{variable passed into SQL select statement to pull data and name data frame}
 }
 \description{
-Creates flowing water results dataframe from oracle data pull.
+Creates results dataframe from oracle data pull.
 User will be prompted for the password to the FDEP Oracle Database GWIS.
 }
 \details{

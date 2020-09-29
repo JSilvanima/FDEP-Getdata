@@ -2,7 +2,7 @@
 #'
 #' @title getdata_results
 #'
-#' @description Creates flowing water results dataframe from oracle data pull.
+#' @description Creates results dataframe from oracle data pull.
 #' User will be prompted for the password to the FDEP Oracle Database GWIS.
 #'
 #' @param arg2 variable passed into SQL select statement to pull data and name data frame
