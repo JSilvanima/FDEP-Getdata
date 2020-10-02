@@ -5,7 +5,7 @@
 #' @description Creates flowing waters exclusions dataframe from oracle data pull.
 #' User will be prompted for the password to the FDEP Oracle Database GWIS.
 #'
-#' @param arg1 varible passed into SQL select statement to pull data and name data frame
+#' @param arg1 variable passed into SQL select statement to pull data and name data frame
 #'
 #' @import RODBC
 #' @import RODM

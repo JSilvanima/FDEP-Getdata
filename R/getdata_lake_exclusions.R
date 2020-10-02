@@ -1,8 +1,8 @@
 #' Function to import exclusions into R dataframe from the FDEP Oracle Database GWIS
 #'
-#' @title getdata_aq_exclusions
+#' @title getdata_lake_exclusions
 #'
-#' @description Creates flowing waters exclusions dataframe from oracle data pull.
+#' @description Creates lake exclusions dataframe from oracle data pull.
 #' User will be prompted for the password to the FDEP Oracle Database GWIS.
 #'
 #' @param arg1 variable passed into SQL select statement to pull data and name data frame
@@ -14,14 +14,14 @@
 #' @import splitstackshape
 #' @import stringr
 #' @export
-#' @examples getdata_aq_exclusions('CA_EXCLUSIONS_2020')
-#'    entering 'CA_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status Confined
-#'    aquifer site exclusions for 2020 site visits.
+#' @examples getdata_lake_exclusions('LL_EXCLUSIONS_2020')
+#'    entering 'LL_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status large
+#'    lake site exclusions for 2020 site visits.
 
 
-getdata_aq_exclusions <- function(arg1) {
+getdata_lake_exclusions <- function(arg1) {
 
-  # User will enter the name of the oracle table with project exclusions, e.g. CA_EXCLUSIONS_2020.
+  # User will enter the name of the oracle table with project exclusions, e.g. LL_EXCLUSIONS_2020.
 
   # User will then be promoted for the password for the oracle database GWIS_ADMIN
 

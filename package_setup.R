@@ -10,7 +10,7 @@ setwd("..")
 
 install("FDEPgetdata")
 
-getdata_aq_exclusions('CA_EXCLUSIONS_2019')
+getdata_lake_exclusions('LL_EXCLUSIONS_2019')
 
 getdata_results("'CA18'")
 

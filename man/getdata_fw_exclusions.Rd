@@ -7,7 +7,7 @@
 getdata_fw_exclusions(arg1)
 }
 \arguments{
-\item{arg1}{varible passed into SQL select statement to pull data and name data frame}
+\item{arg1}{variable passed into SQL select statement to pull data and name data frame}
 }
 \description{
 Creates flowing waters exclusions dataframe from oracle data pull.

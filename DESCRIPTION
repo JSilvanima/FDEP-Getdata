@@ -1,8 +1,8 @@
 Package: FDEPgetdata
 Type: Package
 Title: Retrieves and reformates data for data analyses
-Version: 0.1.4
-Date: 2020-09-29
+Version: 1.0
+Date: 2020-10-02
 Authors@R: 
     person(given = "Jay",
            family = "Silvanima",

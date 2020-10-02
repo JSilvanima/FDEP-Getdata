@@ -2,6 +2,7 @@
 
 export(getdata_aq_exclusions)
 export(getdata_fw_exclusions)
+export(getdata_lake_exclusions)
 export(getdata_results)
 import(RODBC)
 import(RODM)
