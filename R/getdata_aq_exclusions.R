@@ -2,8 +2,8 @@
 #'
 #' @title getdata_aq_exclusions
 #'
-#' @description Creates flowing waters exclusions dataframe from oracle data pull.
-#' User will be prompted for the password to the FDEP Oracle Database GWIS.
+#' @description Creates well exclusions for unconfined / confined well dataframe
+#' from oracle data pull. User will be prompted for the password to the FDEP Oracle Database GWIS.
 #'
 #' @param arg1 variable passed into SQL select statement to pull data and name data frame
 #'
