@@ -33,7 +33,7 @@ getdata_fw_exclusions <- function(arg1) {
   Exclusions <- sqlQuery(channel, paste('select * from', arg1, 'order by pk_random_sample_location'))
 
 
-  #Need to assign NNC values to regions
+  #Need to assign NNC & DO criteria to regions
   Exclusions$TN_NNC<- ifelse(Exclusions$NUTRIENT_WATERSHED_REGION=="PANHANDLE EAST",1.03,
                              ifelse(Exclusions$NUTRIENT_WATERSHED_REGION=="PANHANDLE WEST", 0.67,
                                     ifelse(Exclusions$NUTRIENT_WATERSHED_REGION== "PENINSULAR", 1.54,

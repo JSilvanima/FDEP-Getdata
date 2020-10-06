@@ -32,6 +32,13 @@ getdata_lake_exclusions <- function(arg1) {
 
   Exclusions <- sqlQuery(channel, paste('select * from', arg1, 'order by pk_random_sample_location'))
 
+  #Need to assign DO criteria to regions
+  Exclusions$DO_Conc<- ifelse(Exclusions$SCI_DO_BIOREGION_2012=="BIG BEND",34,
+                              ifelse(Exclusions$SCI_DO_BIOREGION_2012=="PANHANDLE", 67,
+                                     ifelse(Exclusions$SCI_DO_BIOREGION_2012== "PENINSULA", 38,
+                                            ifelse(Exclusions$SCI_DO_BIOREGION_2012=="NORTHEAST", 34,
+                                                   ifelse(Exclusions$SCI_DO_BIOREGION_2012=="EVERGLADES", 38,NA)))))
+
   View(Exclusions)
 
   Exclusions <<- Exclusions
