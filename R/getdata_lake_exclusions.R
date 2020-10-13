@@ -9,10 +9,6 @@
 #'
 #' @import RODBC
 #' @import RODM
-#' @import dplyr
-#' @import tidyr
-#' @import splitstackshape
-#' @import stringr
 #' @export
 #' @examples getdata_lake_exclusions('LL_EXCLUSIONS_2020')
 #'    entering 'LL_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status large
