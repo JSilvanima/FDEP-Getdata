@@ -10,16 +10,16 @@ getdata_results(arg2)
 \item{arg2}{variable passed into SQL select statement to pull data and name data frame}
 }
 \description{
-Creates results dataframe from oracle data pull.
+Creates results data frame from oracle data pull.
 User will be prompted for the password to the FDEP Oracle Database GWIS.
 }
 \details{
-Function to import results into R dataframe from the FDEP Oracle Database GWIS
+Function to import results into R data frame from the FDEP Oracle Database GWIS
 }
 \examples{
 getdata_results("'CN18'")
-   entering "'CN18'" for arg2 will produce a dataframe for FDEP Status Canals sampled in 2018.
+   entering "'CN18'" for arg2 will produce a data frame for FDEP Status Canals sampled in 2018.
 getdata_results("'CN18','CN19','CN20'")
-   entering "'CN18','CN19','CN20'" for arg2 will produce a dataframe for FDEP Status Canals sampled 2018 - 2020.
+   entering "'CN18','CN19','CN20'" for arg2 will produce a data frame for FDEP Status Canals sampled 2018 - 2020.
 
 }

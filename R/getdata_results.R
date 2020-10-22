@@ -1,8 +1,8 @@
-#' Function to import results into R dataframe from the FDEP Oracle Database GWIS
+#' Function to import results into R data frame from the FDEP Oracle Database GWIS
 #'
 #' @title getdata_results
 #'
-#' @description Creates results dataframe from oracle data pull.
+#' @description Creates results data frame from oracle data pull.
 #' User will be prompted for the password to the FDEP Oracle Database GWIS.
 #'
 #' @param arg2 variable passed into SQL select statement to pull data and name data frame
@@ -14,9 +14,9 @@
 #' @import stringr
 #' @export
 #' @examples getdata_results("'CN18'")
-#'    entering "'CN18'" for arg2 will produce a dataframe for FDEP Status Canals sampled in 2018.
-#' getdata_results("'CN18','CN19','CN20'")
-#'    entering "'CN18','CN19','CN20'" for arg2 will produce a dataframe for FDEP Status Canals sampled 2018 - 2020.
+#'    entering "'CN18'" for arg2 will produce a data frame for FDEP Status Canals sampled in 2018.
+#'getdata_results("'CN18','CN19','CN20'")
+#'    entering "'CN18','CN19','CN20'" for arg2 will produce a data frame for FDEP Status Canals sampled 2018 - 2020.
 #'
 
 getdata_results <- function(arg2) {
@@ -30,7 +30,7 @@ getdata_results <- function(arg2) {
 
   # User will then be promoted for the password for the oracle database GWIS_ADMIN
 
-  # A SQL query is then run to pull, pivot, and and create the dataframe Results.
+  # A SQL query is then run to pull, pivot, and and create the data frame Results.
 
   Results<-sqlQuery(channel,paste("select fk_station, fk_random_sample_location, collection_date, sample_type, s.matrix,
     replace(replace(replace(replace(replace(replace(replace(replace(replace(parameter,
