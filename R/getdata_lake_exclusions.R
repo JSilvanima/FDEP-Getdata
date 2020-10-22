@@ -1,9 +1,11 @@
-#' Function to import exclusions into R dataframe from the FDEP Oracle Database GWIS
+#' Function to import lake site evaluation information into R data frame
 #'
 #' @title getdata_lake_exclusions
 #'
-#' @description Creates lake exclusions dataframe from oracle data pull.
+#' @description Creates lake site evaluation data frame from oracle data pull.
 #' User will be prompted for the password to the FDEP Oracle Database GWIS.
+#' Dissolved oxygen (F.A.C. 62-302.533) criteria are added for each record
+#' based on the corresponding nutrient watershed region and bioregion.
 #'
 #' @param arg1 variable passed into SQL select statement to pull data and name data frame
 #'
@@ -11,8 +13,9 @@
 #' @import RODM
 #' @export
 #' @examples getdata_lake_exclusions('LL_EXCLUSIONS_2020')
-#'    entering 'LL_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status large
-#'    lake site exclusions for 2020 site visits.
+#'    Entering 'LL_EXCLUSIONS_2020' for arg1 will produce a data frame
+#'    containing 2020 site evaluation information for FDEP Status large
+#'    lake site seletions.
 
 
 getdata_lake_exclusions <- function(arg1) {
@@ -24,7 +27,7 @@ getdata_lake_exclusions <- function(arg1) {
   channel <- odbcConnect("GWIS_ADMIN",uid="GWIS_ADMIN",pwd=rstudioapi::askForPassword("GWIS Password"))
 
   # Function will then connect to the oracle table export data and pivot it and create
-  #   a dataframe named Exclusions.
+  #   a data frame named Exclusions.
 
   Exclusions <- sqlQuery(channel, paste('select * from', arg1, 'order by pk_random_sample_location'))
 

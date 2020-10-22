@@ -10,14 +10,17 @@ getdata_lake_exclusions(arg1)
 \item{arg1}{variable passed into SQL select statement to pull data and name data frame}
 }
 \description{
-Creates lake exclusions dataframe from oracle data pull.
+Creates lake site evaluation data frame from oracle data pull.
 User will be prompted for the password to the FDEP Oracle Database GWIS.
+Dissolved oxygen (F.A.C. 62-302.533) criteria are added for each record
+based on the corresponding nutrient watershed region and bioregion.
 }
 \details{
-Function to import exclusions into R dataframe from the FDEP Oracle Database GWIS
+Function to import lake site evaluation information into R data frame
 }
 \examples{
 getdata_lake_exclusions('LL_EXCLUSIONS_2020')
-   entering 'LL_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status large
-   lake site exclusions for 2020 site visits.
+   Entering 'LL_EXCLUSIONS_2020' for arg1 will produce a data frame
+   containing 2020 site evaluation information for FDEP Status large
+   lake site seletions.
 }

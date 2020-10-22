@@ -1,23 +1,23 @@
 Package: FDEPgetdata
 Type: Package
-Title: Retrieves and reformates data for data analyses
+Title: Retrieves and reformats data for data analyses
 Version: 1.1
 Date: 2020-10-19
 Authors@R: 
     person(given = "Jay",
-           family = "Silvanima",
-           role = c("aut", "cre"),
-           email = "James.Silvanima@dep.state.fl.us",
-           comment = c(ORCID = "https://orcid.org/0000-0002-5612-8025"))
+          family = "Silvanima",
+          role = c("aut", "cre"),
+          email = "James.Silvanima@dep.state.fl.us",
+    comment = c(ORCID = "https://orcid.org/0000-0002-5612-8025"))
 Maintainer: The package maintainer <James.Silvanima@dep.state.fl.us>
 Description: Creates odbc connection to Florida Department of 
               Environmental Protection oracle database GWIS. Runs 
               sql queries to retrieve probabilistic monitoring data 
-              collected for the Status Monitoring Network. Pivots 
+              collected for the Status Monitoring Network. Pivots
               data prior to creation of data frames. Dependent packages
-              include RODBC, RODM, dplyr, tidyr, splitstackshape, and stringr.
-              The created data frames are used for FDEP data analyses run via
-              the r packages spsurvey and sf.
+              include RODBC, RODM, dplyr, tidyr, splitstackshape, and 
+              stringr. The created data frames are used for FDEP data 
+              analyses run via the r packages spsurvey and sf.
 License: Null
 Encoding: UTF-8
 LazyData: true

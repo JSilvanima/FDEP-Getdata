@@ -10,14 +10,16 @@ getdata_aq_exclusions(arg1)
 \item{arg1}{variable passed into SQL select statement to pull data and name data frame}
 }
 \description{
-Creates well exclusions for unconfined / confined well dataframe
-from oracle data pull. User will be prompted for the password to the FDEP Oracle Database GWIS.
+Creates unconfined / confined well evaluation data frame from
+ oracle data pull. User will be prompted for the password to the FDEP
+ Oracle Database GWIS.
 }
 \details{
-Function to import exclusions into R dataframe from the FDEP Oracle Database GWIS
+Function to import well evaluation information into R data frame
 }
 \examples{
 getdata_aq_exclusions('CA_EXCLUSIONS_2020')
-   entering 'CA_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status Confined
-   aquifer site exclusions for 2020 site visits.
+   Entering 'CA_EXCLUSIONS_2020' for arg1 will produce a data frame
+   containing 2020 site evaluation information for FDEP Status confined
+   well selections.
 }

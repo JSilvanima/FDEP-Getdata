@@ -1,9 +1,10 @@
-#' Function to import exclusions into R dataframe from the FDEP Oracle Database GWIS
+#' Function to import well evaluation information into R data frame
 #'
 #' @title getdata_aq_exclusions
 #'
-#' @description Creates well exclusions for unconfined / confined well dataframe
-#' from oracle data pull. User will be prompted for the password to the FDEP Oracle Database GWIS.
+#' @description Creates unconfined / confined well evaluation data frame from
+#'  oracle data pull. User will be prompted for the password to the FDEP
+#'  Oracle Database GWIS.
 #'
 #' @param arg1 variable passed into SQL select statement to pull data and name data frame
 #'
@@ -11,8 +12,9 @@
 #' @import RODM
 #' @export
 #' @examples getdata_aq_exclusions('CA_EXCLUSIONS_2020')
-#'    entering 'CA_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status Confined
-#'    aquifer site exclusions for 2020 site visits.
+#'    Entering 'CA_EXCLUSIONS_2020' for arg1 will produce a data frame
+#'    containing 2020 site evaluation information for FDEP Status confined
+#'    well selections.
 
 
 getdata_aq_exclusions <- function(arg1) {
@@ -24,7 +26,7 @@ getdata_aq_exclusions <- function(arg1) {
   channel <- odbcConnect("GWIS_ADMIN",uid="GWIS_ADMIN",pwd=rstudioapi::askForPassword("GWIS Password"))
 
   # Function will then connect to the oracle table export data and pivot it and create
-  #   a dataframe named Exclusions.
+  #   a data frame named Exclusions.
 
   Exclusions <- sqlQuery(channel, paste('select * from', arg1, 'order by pk_random_sample_location'))
 

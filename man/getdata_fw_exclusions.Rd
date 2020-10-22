@@ -10,14 +10,17 @@ getdata_fw_exclusions(arg1)
 \item{arg1}{variable passed into SQL select statement to pull data and name data frame}
 }
 \description{
-Creates flowing waters exclusions dataframe from oracle data pull.
+Creates flowing waters site evaluation dataframe from oracle data pull.
 User will be prompted for the password to the FDEP Oracle Database GWIS.
+Total nitrogen (F.A.C. 62-302.531), total phosphorus (F.A.C. 62-302.531),
+and dissolved oxygen (F.A.C. 62-302.533) criteria are added for each record
+based on the corresponding nutrient watershed region and bioregion.
 }
 \details{
-Function to import exclusions into R dataframe from the FDEP Oracle Database GWIS
+Function to import flowing waters site evaluation information into R data frame
 }
 \examples{
 getdata_fw_exclusions('CN_EXCLUSIONS_2020')
-   entering 'CN_EXCLUSIONS_2020' for arg1 will produce a dataframe for FDEP Status Canals
-   site exclusions for 2020 site visits.
+   Entering 'CN_EXCLUSIONS_2020' for arg1 will produce a dataframe of
+   2020 site evaluation information for FDEP Status Canal site selections.
 }
