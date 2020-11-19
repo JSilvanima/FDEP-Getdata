@@ -104,7 +104,7 @@ getdata_results <- function(arg2) {
   Results <<- Results
   View(Results)
 
-  write.csv(Results, "Results.csv")
+  write.csv(Results,file = (paste(arg2,"Results.csv")))
 }
 
 

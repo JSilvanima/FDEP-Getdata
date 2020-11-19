@@ -16,7 +16,7 @@ getdata_fw_exclusions("'CN20'")
 
 getdata_lake_exclusions("'LL19'")
 
-getdata_results("'CA20'")
+getdata_results("'CA18','CA19','CA20'")
 
 uninstall(pkg = "FDEPgetdata")
 

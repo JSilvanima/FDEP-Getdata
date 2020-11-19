@@ -46,6 +46,6 @@ getdata_lake_exclusions <- function(arg1) {
 
   Exclusions <<- Exclusions
 
-  write.csv(Exclusions,file = (paste(arg1,'.csv')))
+  write.csv(Exclusions,file = (paste(arg1,'Sites.csv')))
 
 }
