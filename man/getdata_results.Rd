@@ -12,13 +12,12 @@ getdata_results(arg2)
 \description{
 Creates results data frame from oracle data pull.
 User will be prompted for the password to the FDEP Oracle Database GWIS.
-Replace measurement values with 'NA' for those measurements having any of
+Replaces measurement values with 'NA' for those measurements having any of
  the following fatal data qualifiers: '?, O'.
-Definitions for these codes may be found in FS 62-160.700 Table 1 (Data Qualifier Codes)
- link provided here https://www.flrules.org/gateway/RuleNo.asp?title=QUALITY%20ASSURANCE&ID=62-160.700.
-Replace measurement values with 'NA' for those coliform measurements which
+Replaces measurement values with 'NA' for those coliform measurements which
  have reported values above the criteria (2 for fecal, 4 for total) and are
  listed as below detection ('U' qualifier).
+Definitions for these codes may be found in FS 62-160.700 Table 1 (Data Qualifier Codes).
 }
 \details{
 Function to import results into R data frame from the FDEP Oracle Database GWIS
