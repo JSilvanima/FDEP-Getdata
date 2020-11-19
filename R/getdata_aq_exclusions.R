@@ -11,15 +11,17 @@
 #' @import RODBC
 #' @import RODM
 #' @export
-#' @examples getdata_aq_exclusions('CA_EXCLUSIONS_2020')
-#'    Entering 'CA_EXCLUSIONS_2020' for arg1 will produce a data frame
-#'    containing 2020 site evaluation information for FDEP Status confined
-#'    well selections.
+#' @examples getdata_aq_exclusions("'CA18'")
+#'    entering "'CA18'" for arg1 will produce a data frame for FDEP Status confined aquifer wells sampled in 2018.
+#            getdata_results("'CA18','CA19','CA20'")
+#'    entering "'CA18','CA19','CA20'" for arg1 will produce a data frame for FDEP Status confined aquifer wells sampled 2018 - 2020.
+#'
 
 
 getdata_aq_exclusions <- function(arg1) {
 
-  # User will enter the name of the oracle table with project exclusions, e.g. CA_EXCLUSIONS_2020.
+  # User will enter the infromation specific to the site evaluations needed for the analysis.  Refer to
+  #  example above. -- getdata_aq_exclusions("'CA18'") --
 
   # User will then be promoted for the password for the oracle database GWIS_ADMIN
 
@@ -28,7 +30,9 @@ getdata_aq_exclusions <- function(arg1) {
   # Function will then connect to the oracle table export data and pivot it and create
   #   a data frame named Exclusions.
 
-  Exclusions <- sqlQuery(channel, paste('select * from', arg1, 'order by pk_random_sample_location'))
+  Exclusions <- sqlQuery(channel, paste("select * from site_evaluations
+            where substr(fk_project,3,4) in (",arg1,")
+                      order by pk_random_sample_location"))
 
   View(Exclusions)
 

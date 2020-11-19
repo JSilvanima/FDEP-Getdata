@@ -13,13 +13,16 @@
 #' @import RODBC
 #' @import RODM
 #' @export
-#' @examples getdata_fw_exclusions('CN_EXCLUSIONS_2020')
-#'    Entering 'CN_EXCLUSIONS_2020' for arg1 will produce a dataframe of
-#'    2020 site evaluation information for FDEP Status Canal site selections.
+#' @examples getdata_fw_exclusions("'CN18'")
+#'    entering "'CA18'" for arg1 will produce a data frame for FDEP Status canals sampled in 2018.
+#            getdata_results("'CN18','CN19','CN20'")
+#'    entering "'CN18','CN19','CN20'" for arg1 will produce a data frame for FDEP Status canals sampled 2018 - 2020.
+#'
 
 getdata_fw_exclusions <- function(arg1) {
 
-  # User will enter the name of the oracle table with project exclusions, e.g. CN_EXCLUSIONS_2020.
+  # User will enter the infromation specific to the site evaluations needed for the analysis.  Refer to
+  #  example above. -- getdata_fw_exclusions("'CN18'") --
 
   # User will then be promoted for the password for the oracle database GWIS_ADMIN
 
@@ -28,8 +31,9 @@ getdata_fw_exclusions <- function(arg1) {
   # Function will then connect to the oracle table export data and pivot it and create
   #   a dataframe named Exclusions.
 
-  Exclusions <- sqlQuery(channel, paste('select * from', arg1, 'order by pk_random_sample_location'))
-
+  Exclusions <- sqlQuery(channel, paste("select * from site_evaluations
+            where substr(fk_project,3,4) in (",arg1,")
+                      order by pk_random_sample_location"))
 
   #Need to assign NNC & DO criteria to regions
   Exclusions$TN_NNC<- ifelse(Exclusions$NUTRIENT_WATERSHED_REGION=="PANHANDLE EAST",1.03,

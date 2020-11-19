@@ -38,7 +38,27 @@ getdata_results <- function(arg2) {
     chr(91),''),chr(93),'') parameter,value, value_qualifier
         from t_sample s,t_parameter p,t_result r
               where pk_sample = fk_sample and pk_param_code = fk_param_code
-              and fk_param_code <> 99982 and substr(fk_project,3,4) in (",arg2,")"))
+              and fk_param_code <> 99982 and substr(fk_project,3,4) in (",arg2,")
+                                  order by fk_random_sample_location"))
+
+  # Replace measurement values with 'NA' for those measurements having any of
+  #   the following fatal data qualifiers: '?, O'.
+  # Definitions for these codes may be found in FS 62-160.700 Table 1 (Data Qualifier Codes)
+  #  link provided here https://www.flrules.org/gateway/RuleNo.asp?title=QUALITY%20ASSURANCE&ID=62-160.700.
+
+  Results$VALUE <- ifelse(grepl('?', Results$VALUE_QUALIFIER, fixed=TRUE), NA, Results$VALUE)
+  Results$VALUE <- ifelse(grepl('O', Results$VALUE_QUALIFIER, fixed=TRUE), NA, Results$VALUE)
+
+  # Replace measurement values with 'NA' for those coliform measurements which
+  #  have reported values above the criteria (2 for fecal, 4 for total) and are
+  #  listed as below detection ('U' qualifier).
+
+  Results$VALUE <- ifelse((Results$PARAMETER == 'Coliform_Total_MF') &
+                                (grepl('U', Results$VALUE_QUALIFIER, fixed=TRUE)) &
+                                (Results$VALUE > 4), NA, Results$VALUE)
+  Results$VALUE <- ifelse((Results$PARAMETER == 'Coliform_Fecal_MF') &
+                                (grepl('U', Results$VALUE_QUALIFIER, fixed=TRUE)) &
+                                (Results$VALUE >= 2), NA, Results$VALUE)
 
   ##Create new column with value & qualifier concatenated and seperated by a pipe symbol.
   Results$VALUE_VALUE_QUALIFIER<-paste(Results$VALUE,"|",Results$VALUE_QUALIFIER)

@@ -18,8 +18,8 @@ Creates unconfined / confined well evaluation data frame from
 Function to import well evaluation information into R data frame
 }
 \examples{
-getdata_aq_exclusions('CA_EXCLUSIONS_2020')
-   Entering 'CA_EXCLUSIONS_2020' for arg1 will produce a data frame
-   containing 2020 site evaluation information for FDEP Status confined
-   well selections.
+getdata_aq_exclusions("'CA18'")
+   entering "'CA18'" for arg1 will produce a data frame for FDEP Status confined aquifer wells sampled in 2018.
+   entering "'CA18','CA19','CA20'" for arg1 will produce a data frame for FDEP Status confined aquifer wells sampled 2018 - 2020.
+
 }

@@ -10,9 +10,13 @@ setwd("..")
 
 install("FDEPgetdata")
 
-getdata_lake_exclusions('LL_EXCLUSIONS_2019')
+getdata_aq_exclusions("'CA18','CA19','CA20'")
 
-getdata_results("'CA18'")
+getdata_fw_exclusions("'CN20'")
+
+getdata_lake_exclusions("'LL19'")
+
+getdata_results("'CA20'")
 
 uninstall(pkg = "FDEPgetdata")
 

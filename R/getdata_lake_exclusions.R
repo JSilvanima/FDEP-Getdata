@@ -12,15 +12,17 @@
 #' @import RODBC
 #' @import RODM
 #' @export
-#' @examples getdata_lake_exclusions('LL_EXCLUSIONS_2020')
-#'    Entering 'LL_EXCLUSIONS_2020' for arg1 will produce a data frame
-#'    containing 2020 site evaluation information for FDEP Status large
-#'    lake site seletions.
+#' @examples getdata_lake_exclusions("'LL18'")
+#'    entering "'LL18'" for arg1 will produce a data frame for FDEP Status lakes sampled in 2018.
+#            getdata_results("'LL18','LL19','LL20'")
+#'    entering "'LL18','LL19','LL20'" for arg1 will produce a data frame for FDEP Status lakes sampled 2018 - 2020.
+#'
 
 
 getdata_lake_exclusions <- function(arg1) {
 
-  # User will enter the name of the oracle table with project exclusions, e.g. LL_EXCLUSIONS_2020.
+  # User will enter the infromation specific to the site evaluations needed for the analysis.  Refer to
+  #  example above. -- getdata_lake_exclusions("'LL18'") --
 
   # User will then be promoted for the password for the oracle database GWIS_ADMIN
 
@@ -29,7 +31,9 @@ getdata_lake_exclusions <- function(arg1) {
   # Function will then connect to the oracle table export data and pivot it and create
   #   a data frame named Exclusions.
 
-  Exclusions <- sqlQuery(channel, paste('select * from', arg1, 'order by pk_random_sample_location'))
+  Exclusions <- sqlQuery(channel, paste("select * from site_evaluations
+            where substr(fk_project,3,4) in (",arg1,")
+                      order by pk_random_sample_location"))
 
   #Need to assign DO criteria to regions
   Exclusions$DO_Conc<- ifelse(Exclusions$SCI_DO_BIOREGION_2012=="BIG BEND",34,

@@ -20,7 +20,8 @@ based on the corresponding nutrient watershed region and bioregion.
 Function to import flowing waters site evaluation information into R data frame
 }
 \examples{
-getdata_fw_exclusions('CN_EXCLUSIONS_2020')
-   Entering 'CN_EXCLUSIONS_2020' for arg1 will produce a dataframe of
-   2020 site evaluation information for FDEP Status Canal site selections.
+getdata_fw_exclusions("'CN18'")
+   entering "'CA18'" for arg1 will produce a data frame for FDEP Status canals sampled in 2018.
+   entering "'CN18','CN19','CN20'" for arg1 will produce a data frame for FDEP Status canals sampled 2018 - 2020.
+
 }

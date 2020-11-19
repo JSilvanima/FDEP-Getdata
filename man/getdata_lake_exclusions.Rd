@@ -19,8 +19,8 @@ based on the corresponding nutrient watershed region and bioregion.
 Function to import lake site evaluation information into R data frame
 }
 \examples{
-getdata_lake_exclusions('LL_EXCLUSIONS_2020')
-   Entering 'LL_EXCLUSIONS_2020' for arg1 will produce a data frame
-   containing 2020 site evaluation information for FDEP Status large
-   lake site seletions.
+getdata_lake_exclusions("'LL18'")
+   entering "'LL18'" for arg1 will produce a data frame for FDEP Status lakes sampled in 2018.
+   entering "'LL18','LL19','LL20'" for arg1 will produce a data frame for FDEP Status lakes sampled 2018 - 2020.
+
 }
