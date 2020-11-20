@@ -56,16 +56,6 @@ getdata_results <- function(arg2) {
   Results$VALUE <- ifelse(grepl('?', Results$VALUE_QUALIFIER, fixed=TRUE), NA, Results$VALUE)
   Results$VALUE <- ifelse(grepl('O', Results$VALUE_QUALIFIER, fixed=TRUE), NA, Results$VALUE)
 
-  # Replace measurement values with 'NA' for those coliform measurements which
-  #  have reported values above the criteria (2 for fecal, 4 for total) and are
-  #  listed as below detection ('U' qualifier).
-
-  Results$VALUE <- ifelse((Results$PARAMETER == 'Coliform_Total_MF') &
-                                (grepl('U', Results$VALUE_QUALIFIER, fixed=TRUE)) &
-                                (Results$VALUE > 4), NA, Results$VALUE)
-  Results$VALUE <- ifelse((Results$PARAMETER == 'Coliform_Fecal_MF') &
-                                (grepl('U', Results$VALUE_QUALIFIER, fixed=TRUE)) &
-                                (Results$VALUE >= 2), NA, Results$VALUE)
 
   ##Create new column with value & qualifier concatenated and seperated by a pipe symbol.
   Results$VALUE_VALUE_QUALIFIER<-paste(Results$VALUE,"|",Results$VALUE_QUALIFIER)
