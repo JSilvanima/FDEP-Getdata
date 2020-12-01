@@ -13,7 +13,7 @@ getdata_results(arg2)
 Creates results data frame from oracle data pull.
 User will be prompted for the password to the FDEP Oracle Database GWIS.
 Replaces measurement values with 'NA' for those measurements having any of
- the following fatal data qualifiers: '?, O'.
+ the following fatal data qualifiers: '?,O,N,T,X'.
 Replaces measurement values with 'NA' for those coliform measurements which
  have reported values above the criteria (2 for fecal, 4 for total) and are
  listed as below detection ('U' qualifier).

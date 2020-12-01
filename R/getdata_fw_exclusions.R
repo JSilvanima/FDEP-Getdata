@@ -31,6 +31,14 @@ getdata_fw_exclusions <- function(arg1) {
   # Function will then connect to the oracle table export data and pivot it and create
   #   a dataframe named Exclusions.
 
+  # 11/30/2020 - Modified CSV file naming. Name is now value of arg1 without quotes.
+  # Designated underscore as seperator in paste funcitons.
+  # For 3 year analysis, portions of arg2 are seperated by underscores (e.g. CN18_CN19_CN20_Results.csv).
+
+  arg3 <- ifelse(str_length(arg1) > 6, paste(substr(arg1, 2, 5), substr(arg1, 9, 12),
+                                             substr(arg1, 16, 19), sep = "_"),substr(arg1, 2, 5))
+
+
   Exclusions <- sqlQuery(channel, paste("select * from site_evaluations
             where substr(fk_project,3,4) in (",arg1,")
                       order by pk_random_sample_location"))
@@ -55,9 +63,7 @@ getdata_fw_exclusions <- function(arg1) {
                                                    ifelse(Exclusions$SCI_DO_BIOREGION_2012=="EVERGLADES", 38,NA)))))
 
   View(Exclusions)
-
   Exclusions <<- Exclusions
-
-  write.csv(Exclusions,file = (paste(arg1,'Sites.csv')))
+  write.csv(Exclusions,file = (paste(arg3,"Sites.csv", sep = "_")))
 
 }

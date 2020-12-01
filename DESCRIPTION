@@ -1,15 +1,18 @@
 Package: FDEPgetdata
 Type: Package
 Title: Retrieves and reformats data for data analyses
-Version: 1.3
-Date: 2020-11-20
-Authors@R: 
-    person(given = "Jay",
+Version: 1.4
+Date: 2020-12-01
+Authors@R: person(given = "Jay",
           family = "Silvanima",
           role = c("aut", "cre"),
           email = "James.Silvanima@dep.state.fl.us",
-    comment = c(ORCID = "https://orcid.org/0000-0002-5612-8025"))
+          comment = c(ORCID = "https://orcid.org/0000-0002-5612-8025"))
+Author:   Jay Silvanima [aut],
+          Liz Miller [aut], 
+          Stephanie Sunderman-Barnes [aut] 
 Maintainer: The package maintainer <James.Silvanima@dep.state.fl.us>
+Depends: R (>= 3.6.2)
 Description: Creates odbc connection to Florida Department of 
               Environmental Protection oracle database GWIS. Runs 
               sql queries to retrieve probabilistic monitoring data 

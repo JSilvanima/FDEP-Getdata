@@ -3,6 +3,7 @@ setwd("C:/R/packages/FDEPgetdata")
 library(devtools)
 library(RODM)
 library(roxygen2)
+library(RODBC)
 
 document()
 
@@ -10,7 +11,9 @@ setwd("..")
 
 install("FDEPgetdata")
 
-getdata_aq_exclusions("'CA18','CA19','CA20'")
+getdata_aq_exclusions_3yr('well_listframe_2020',"'CA18','CA19','CA20'")
+
+getdata_aq_exclusions("'CA18'")
 
 getdata_fw_exclusions("'CN20'")
 

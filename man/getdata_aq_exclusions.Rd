@@ -15,11 +15,12 @@ Creates unconfined / confined well evaluation data frame from
  Oracle Database GWIS.
 }
 \details{
-Function to import well evaluation information into R data frame
+Function to import well evaluation information into R data frame for annual
+ assessments.
 }
 \examples{
 getdata_aq_exclusions("'CA18'")
-   entering "'CA18'" for arg1 will produce a data frame for FDEP Status confined aquifer wells sampled in 2018.
-   entering "'CA18','CA19','CA20'" for arg1 will produce a data frame for FDEP Status confined aquifer wells sampled 2018 - 2020.
+   entering "'CA18'" for arg1 will produce a data frame for FDEP Status confined
+   aquifer wells evaluated in 2018.
 
 }
