@@ -26,4 +26,4 @@ uninstall(pkg = "FDEPgetdata")
 uninstall.
 
 
-import(RODBC, RODM, dplyr, tidyr, splitstackshape, stringr)
+import(RODBC, RODM, dplyr, tidyr, splitstackshape, stringr, sqldf)
