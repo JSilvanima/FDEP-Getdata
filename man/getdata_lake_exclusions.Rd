@@ -13,14 +13,14 @@ getdata_lake_exclusions(arg1)
 Creates lake site evaluation data frame from oracle data pull.
 User will be prompted for the password to the FDEP Oracle Database GWIS.
 Dissolved oxygen (F.A.C. 62-302.533) criteria are added for each record
-based on the corresponding nutrient watershed region and bioregion.
+based on the corresponding bioregion.
 }
 \details{
 Function to import lake site evaluation information into R data frame
 }
 \examples{
 getdata_lake_exclusions("'LL18'")
-   entering "'LL18'" for arg1 will produce a data frame for FDEP Status lakes sampled in 2018.
-   entering "'LL18','LL19','LL20'" for arg1 will produce a data frame for FDEP Status lakes sampled 2018 - 2020.
+   entering "'LL18'" for arg1 will produce a data frame for FDEP Status large lakes sampled in 2018.
+   entering "'LL18','LL19','LL20'" for arg1 will produce a data frame for FDEP Status large lakes sampled 2018 - 2020.
 
 }
