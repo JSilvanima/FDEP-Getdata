@@ -1,16 +1,17 @@
 #' Function to create Exclusions, Site Evaluations and well removals data frames for 3 year combined analyses.
+#' Create date 04/26/2021
 #'
-#' @title getdata_aq_exclusions_3yr
+#' @title getdata_aq_exclusions_multi_yr
 #'
 #' @description Creates 3 data frames of unconfined / confined well evaluation data via
 #'  oracle data pull. User will be prompted for the password to the FDEP Oracle Database GWIS.
-#'    1) A data frame (Exclusions) containing all well evaluations for the three year period.
-#'    2) A data frame (well_removals) containing all wells evaluated in the three period which are no
+#'    1) A data frame (Exclusions) containing all well evaluations for the period of record.
+#'    2) A data frame (well_removals) containing all wells evaluated period of record which are no
 #'       longer included in the traget population. SQL script compares the primary key
 #'       for the most recent well list frame to those found in the site evaluation data
 #'       pull for the three year period.
-#'    3) A data frame (SiteEvaluations) containing the wells which were evaluated and present in
-#'       the well list frame for the most recent year evaluated.
+#'    3) A data frame (SiteEvaluations) containing the wells which were evaluated and are
+#'       present in the well list frame for the most recent year in the period of record.
 #'  User will be prompted for the password to the FDEP Oracle Database GWIS.
 #'
 #' @param arg1 Variable passed into SQL select statement to indicate which year's target population
@@ -22,17 +23,26 @@
 #' @import RODM
 #' @import sqldf
 #' @export
-#' @examples getdata_aq_exclusions_3yr("'well_listframe_2020',"'CA18','CA19','CA20'")
+#' @examples getdata_aq_exclusions_3yr("'2020',"'CA18','CA19','CA20'")
 #'    entering "'well_listframe_2020',"'CA18','CA19','CA20'" for arg1, arg2
-#'    will produce a data frame for FDEP Status confined aquifer wells
-#'    evaluated during 2018-2020 which no longer are in the target population.
+#'    will produce 1) a data frame for FDEP Status confined aquifer wells
+#'    evaluated during 2018-2020, 2) a data frame of those wells which no
+#'    longer are in the target population, and 3) a data frame of the wells
+#'    which were evaluated and are present in the well list frame for the
+#'    most recent year in the period of record.
 #'
+#'    getdata_aq_exclusions_3yr("'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'")
+#'    entering "'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'" for arg1, arg2
+#'    will produce 1) a data frame for FDEP Status confined aquifer wells
+#'    evaluated during 2009-2011 and 2018-2020, 2) a data frame of those wells which no
+#'    longer are in the target populatiomn, and 3) a data frame of the wells
+#'    which were evaluated and are present in the well list frame for the
+#'    most recent year in the period of record.
 
-
-getdata_aq_exclusions_3yr <- function(arg1,arg2) {
+getdata_aq_exclusions_multi_yr <- function(arg1,arg2) {
 
   # User will enter the infromation specific to the site evaluations needed for the analysis.  Refer to
-  #  example above. -- well_removals('WELL_LISTFRAME_2020',"'CA18','CA19','CA20'") --
+  #  example above. -- well_removals('2020',"'CA18','CA19','CA20'") --
 
   # User will then be promoted for the password for the oracle database GWIS_ADMIN
 
@@ -57,10 +67,15 @@ getdata_aq_exclusions_3yr <- function(arg1,arg2) {
   Exclusions <<- Exclusions
   write.csv(Exclusions,file = (paste(arg3,"Sites.csv", sep = "_")))
 
+  # 04/25/2021 - Modified select pull because of database table consolidation of
+  #  annual well listframe tables into one table well_listframe.
+
   well_removals <- sqlQuery(channel,paste("select * from site_evaluations
-          where fk_well_listframe_id not in (select distinct(id) from ",arg1,")
-          and substr(site_evaluations.fk_project,3,4) in (",arg2,")
+          where substr(site_evaluations.fk_project,3,4) in (",arg2,")
+          and fk_well_listframe_id not in (select distinct(fl_id) from well_listframe
+          where listframe_year = ",arg1,")
           order by Pk_random_sample_location"))
+
 
   View(well_removals)
   well_removals <<- well_removals
