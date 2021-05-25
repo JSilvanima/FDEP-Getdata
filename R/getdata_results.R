@@ -10,6 +10,12 @@
 #'  have reported values above the criteria (2 for fecal, 4 for total) and are
 #'  listed as below detection ('U' qualifier).
 #' Definitions for these codes may be found in FS 62-160.700 Table 1 (Data Qualifier Codes).
+#' This function produce extraneous columns in the pivoted data frame if there are
+#'  multiple values for the same parameter for a single sample. The users will get a
+#'  warning error stating the following.  If this occurs contact examine the results data frame.
+#'  Locate the affected samples and investigate further.  Type c(" in the R Studio search bar
+#'  to search the results data frame for the affected samples. Contact data management
+#'  team for resolution.
 #'
 #'
 #' @param arg2 variable passed into SQL select statement to pull data and name data frame
@@ -41,7 +47,10 @@ getdata_results <- function(arg2) {
   ##11/30/2020 - Changed character replacement from underscore to period. This was needed to make pivot
   # and split work correctly for column names that included numbers (e.g. PCB 1260).
   # Periods will be replaced by underscores after pivot and split is complete.
-  Results<-sqlQuery(channel,paste("select fk_station, fk_random_sample_location, collection_date, sample_type, s.matrix,
+
+  ##05/20/21 Modified to add fk_sample into data pull to correct 'duplicated' data issue.
+
+  Results<-sqlQuery(channel,paste("select fk_station, fk_random_sample_location, fk_sample, collection_date, sample_type, s.matrix,
     replace(replace(replace(replace(replace(replace(replace(replace(replace(parameter,
     chr(39),''),chr(44),''),chr(43),''),chr(45),'.'),chr(32),'.'),chr(40),''),chr(41),''),
     chr(91),''),chr(93),'') parameter,value, value_qualifier
@@ -66,7 +75,7 @@ getdata_results <- function(arg2) {
   Results$VALUE_VALUE_QUALIFIER<-paste(Results$VALUE,"|",Results$VALUE_QUALIFIER)
 
   ##Pivot the results. Should return one column per param with "value|VQ".
-  Results_PIVOT<-pivot_wider(Results,id_cols = c(FK_STATION,FK_RANDOM_SAMPLE_LOCATION, COLLECTION_DATE,SAMPLE_TYPE,MATRIX),names_from = PARAMETER,values_from = VALUE_VALUE_QUALIFIER, values_fill = NULL, values_fn = NULL)
+  Results_PIVOT<-pivot_wider(Results,id_cols = c(FK_STATION,FK_RANDOM_SAMPLE_LOCATION,FK_SAMPLE,COLLECTION_DATE,SAMPLE_TYPE,MATRIX),names_from = PARAMETER,values_from = VALUE_VALUE_QUALIFIER, values_fill = NULL, values_fn = NULL)
 
   ##Create variable to store number of columns.
   ColCount <- ncol(Results_PIVOT)
@@ -99,7 +108,7 @@ getdata_results <- function(arg2) {
   # Designated underscore as seperator in paste funcitons.
   # For 3 year analysis, portions of arg2 are seperated by underscores (e.g. CN18_CN19_CN20_Results.csv).
   arg3 <- ifelse(str_length(arg2) > 6, paste(substr(arg2, 2, 5), substr(arg2, 9, 12),
-         substr(arg2, 16, 19), sep = "_"),substr(arg2, 2, 5))
+                                             substr(arg2, 16, 19), sep = "_"),substr(arg2, 2, 5))
 
   write.csv(Results,file = (paste(arg3,"Results.csv", sep = "_")))
 }

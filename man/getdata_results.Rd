@@ -18,6 +18,12 @@ Replaces measurement values with 'NA' for those coliform measurements which
  have reported values above the criteria (2 for fecal, 4 for total) and are
  listed as below detection ('U' qualifier).
 Definitions for these codes may be found in FS 62-160.700 Table 1 (Data Qualifier Codes).
+This function produce extraneous columns in the pivoted data frame if there are
+ multiple values for the same parameter for a single sample. The users will get a
+ warning error stating the following.  If this occurs contact examine the results data frame.
+ Locate the affected samples and investigate further.  Type c(" in the R Studio search bar
+ to search the results data frame for the affected samples. Contact data management
+ team for resolution.
 }
 \details{
 Function to import results into R data frame from the FDEP Oracle Database GWIS

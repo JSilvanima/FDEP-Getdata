@@ -15,7 +15,8 @@
 #' @examples getdata_lake_exclusions("'LL18'")
 #'    entering "'LL18'" for arg1 will produce a data frame for FDEP Status large lakes sampled in 2018.
 #            getdata_results("'LL18','LL19','LL20'")
-#'    entering "'LL18','LL19','LL20'" for arg1 will produce a data frame for FDEP Status large lakes sampled 2018 - 2020.
+#'    entering "'LL18','LL19','LL20'" for arg1 will produce a data frame for FDEP Status large lakes
+#'    sampled 2018 - 2020.
 #'
 
 

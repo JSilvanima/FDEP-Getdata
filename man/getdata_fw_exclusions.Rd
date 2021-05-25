@@ -21,7 +21,8 @@ Function to import flowing waters site evaluation information into R data frame
 }
 \examples{
 getdata_fw_exclusions("'CN18'")
-   entering "'CA18'" for arg1 will produce a data frame for FDEP Status canals sampled in 2018.
-   entering "'CN18','CN19','CN20'" for arg1 will produce a data frame for FDEP Status canals sampled 2018 - 2020.
+   entering "'CN18'" for arg1 will produce a data frame for FDEP Status canals sampled in 2018.
+   entering "'CN18','CN19','CN20'" for arg1 will produce a data frame for FDEP
+   Status canals sampled 2018 - 2020.
 
 }
