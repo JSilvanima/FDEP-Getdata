@@ -11,7 +11,7 @@ setwd("..")
 
 install("FDEPgetdata")
 
-getdata_aq_exclusions_3yr('well_listframe_2020',"'CA18','CA19','CA20'")
+getdata_aq_exclusions_3yr("'CA18','CA19','CA20'")
 
 getdata_aq_exclusions("'CA18'")
 

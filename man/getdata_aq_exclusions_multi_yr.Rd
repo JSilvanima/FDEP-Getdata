@@ -4,7 +4,7 @@
 \alias{getdata_aq_exclusions_multi_yr}
 \title{getdata_aq_exclusions_multi_yr}
 \usage{
-getdata_aq_exclusions_multi_yr(arg1, arg2)
+getdata_aq_exclusions_multi_yr(arg1, arg2, arg3)
 }
 \arguments{
 \item{arg1}{Variable passed into SQL select statement to indicate which year's target population
@@ -17,20 +17,19 @@ evaluation date to used for comparision to most recent well list frame.}
 Creates 3 data frames of unconfined / confined well evaluation data via
  oracle data pull. User will be prompted for the password to the FDEP Oracle Database GWIS.
    1) A data frame (Exclusions) containing all well evaluations for the period of record.
-   2) A data frame (well_removals) containing all wells evaluated period of record which are no
-      longer included in the traget population. SQL script compares the primary key
-      for the most recent well list frame to those found in the site evaluation data
-      pull for the three year period.
+   2) A data frame (well_removals) containing all wells evaluated during the period of
+      record which are no longer included in the target population. SQL script compares
+      the primary key for the most recent well list frame to those found in the site
+      evaluation data pull for the three year period.
    3) A data frame (SiteEvaluations) containing the wells which were evaluated and are
       present in the well list frame for the most recent year in the period of record.
- User will be prompted for the password to the FDEP Oracle Database GWIS.
 }
 \details{
 Function to create Exclusions, Site Evaluations and well removals data frames for 3 year combined analyses.
-Create date 04/26/2021
+Create date 01/25/2023
 }
 \examples{
-getdata_aq_exclusions_3yr("'2020',"'CA18','CA19','CA20'")
+getdata_aq_exclusions_multi_yr("'2020',"'CA18','CA19','CA20'","'CONFINED AQUIFER'")
    entering "'well_listframe_2020',"'CA18','CA19','CA20'" for arg1, arg2
    will produce 1) a data frame for FDEP Status confined aquifer wells
    evaluated during 2018-2020, 2) a data frame of those wells which no
@@ -38,11 +37,11 @@ getdata_aq_exclusions_3yr("'2020',"'CA18','CA19','CA20'")
    which were evaluated and are present in the well list frame for the
    most recent year in the period of record.
 
-   getdata_aq_exclusions_3yr("'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'")
-   entering "'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'" for arg1, arg2
+   getdata_aq_exclusions_multi_yr("'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'","'CONFINED AQUIFER'")
+   entering "'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'","'CONFINED AQUIFER'" for arg1, arg2, arg3
    will produce 1) a data frame for FDEP Status confined aquifer wells
    evaluated during 2009-2011 and 2018-2020, 2) a data frame of those wells which no
-   longer are in the target populatiomn, and 3) a data frame of the wells
+   longer are in the target population, and 3) a data frame of the wells
    which were evaluated and are present in the well list frame for the
    most recent year in the period of record.
 }
