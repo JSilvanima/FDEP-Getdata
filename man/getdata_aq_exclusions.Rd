@@ -7,10 +7,10 @@
 getdata_aq_exclusions(arg1)
 }
 \arguments{
-\item{arg1}{variable passed into SQL select statement to pull data and name data frame}
+\item{arg1}{variable passed into SQL select statement to pull data and name CSV file output.}
 }
 \description{
-Creates unconfined / confined well evaluation data frame from
+Creates unconfined / confined well site evaluation data frame from
  oracle data pull. User will be prompted for the password to the FDEP
  Oracle Database GWIS.
 }

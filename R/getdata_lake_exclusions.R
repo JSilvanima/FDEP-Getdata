@@ -7,14 +7,14 @@
 #' Dissolved oxygen (F.A.C. 62-302.533) criteria are added for each record
 #' based on the corresponding bioregion.
 #'
-#' @param arg1 variable passed into SQL select statement to pull data and name data frame
+#' @param arg1 variable passed into SQL select statement to pull data and name CSV file output
 #'
 #' @import RODBC
-#' @import RODM
 #' @export
 #' @examples getdata_lake_exclusions("'LL18'")
 #'    entering "'LL18'" for arg1 will produce a data frame for FDEP Status large lakes sampled in 2018.
-#            getdata_results("'LL18','LL19','LL20'")
+#'
+#'getdata_lake_exclusions("'LL18','LL19','LL20'")
 #'    entering "'LL18','LL19','LL20'" for arg1 will produce a data frame for FDEP Status large lakes
 #'    sampled 2018 - 2020.
 #'
@@ -22,22 +22,25 @@
 
 getdata_lake_exclusions <- function(arg1) {
 
-  # User will enter the infromation specific to the site evaluations needed for the analysis.  Refer to
+  # User will enter the information specific to the site evaluations needed for the analysis.  Refer to
   #  example above. -- getdata_lake_exclusions("'LL18'") --
 
   # User will then be promoted for the password for the oracle database GWIS_ADMIN
 
   channel <- odbcConnect("GWIS_ADMIN",uid="GWIS_ADMIN",pwd=rstudioapi::askForPassword("GWIS Password"))
 
-  # Function will then connect to the oracle table export data and pivot it and create
+  # Function will then connect to the oracle table export data and create
   #   a data frame named Exclusions.
 
   # 11/30/2020 - Modified CSV file naming. Name is now value of arg1 without quotes.
-  # Designated underscore as seperator in paste funcitons.
-  # For 3 year analysis, portions of arg2 are seperated by underscores (e.g. CN18_CN19_CN20_Results.csv).
+  # Designated underscore as separator in paste functions.
+  # For multi-year analysis, portions of arg1 are separated by underscores (e.g. LL18_LL19_LL20_Sites.csv).
+  # 02/17/2023 - Modified CSV file naming to support scenarios where arg1 contains
+  #              more than 3 resource and year identifiers.
+  #              Removed row names from CSV file output.
 
-  arg3 <- ifelse(str_length(arg1) > 6, paste(substr(arg1, 2, 5), substr(arg1, 9, 12),
-                                             substr(arg1, 16, 19), sep = "_"),substr(arg1, 2, 5))
+  arg2 <- gsub("'", "", arg1)
+  arg2 <- gsub(",", "_", arg2)
 
 
   Exclusions <- sqlQuery(channel, paste("select * from site_evaluations
@@ -53,6 +56,6 @@ getdata_lake_exclusions <- function(arg1) {
 
   View(Exclusions)
   Exclusions <<- Exclusions
-  write.csv(Exclusions,file = (paste(arg3,"Sites.csv", sep = "_")))
+  write.csv(Exclusions,file = (paste(arg2,"Sites.csv", sep = "_")), row.names = FALSE)
 
 }

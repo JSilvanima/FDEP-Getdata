@@ -11,7 +11,10 @@ getdata_aq_exclusions_multi_yr(arg1, arg2, arg3)
 to be used for SQL statement.}
 
 \item{arg2}{Variable passed into SQL select statement to indicate which years' site
-evaluation date to used for comparision to most recent well list frame.}
+evaluation data to use for comparison to most recent well list frame.}
+
+\item{arg3}{Variable passed into SQL select statement to indicate the
+resource (CONFINED AQUIFER or UNCONFINED AQUIFER) of the target population.}
 }
 \description{
 Creates 3 data frames of unconfined / confined well evaluation data via
@@ -29,19 +32,19 @@ Function to create Exclusions, Site Evaluations and well removals data frames fo
 Create date 01/25/2023
 }
 \examples{
-getdata_aq_exclusions_multi_yr("'2020',"'CA18','CA19','CA20'","'CONFINED AQUIFER'")
-   entering "'well_listframe_2020',"'CA18','CA19','CA20'" for arg1, arg2
+getdata_aq_exclusions_multi_yr("'2020'","'CA18','CA19','CA20'","'CONFINED AQUIFER'")
+   entering "'2020'","'CA18','CA19','CA20'","'CONFINED AQUIFER'" for arg1, arg2, arg3
    will produce 1) a data frame for FDEP Status confined aquifer wells
-   evaluated during 2018-2020, 2) a data frame of those wells which no
-   longer are in the target population, and 3) a data frame of the wells
-   which were evaluated and are present in the well list frame for the
-   most recent year in the period of record.
+   evaluated during 2018-2020, 2) a data frame of those wells which no longer
+   are in the target population for the year specified in arg1, and 3) a data frame of the wells
+   which were evaluated during 2018-2020 and are present in the well list frame for the
+   year specified in arg1.
 
-   getdata_aq_exclusions_multi_yr("'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'","'CONFINED AQUIFER'")
+getdata_aq_exclusions_multi_yr("'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'","'CONFINED AQUIFER'")
    entering "'2020'","'CA09','CA10','CA11','CA18','CA19','CA20'","'CONFINED AQUIFER'" for arg1, arg2, arg3
    will produce 1) a data frame for FDEP Status confined aquifer wells
    evaluated during 2009-2011 and 2018-2020, 2) a data frame of those wells which no
-   longer are in the target population, and 3) a data frame of the wells
+   longer are in the target population for the year specified in arg1, and 3) a data frame of the wells
    which were evaluated and are present in the well list frame for the
-   most recent year in the period of record.
+   for the year specified in arg1.
 }

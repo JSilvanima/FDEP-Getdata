@@ -6,9 +6,6 @@
 #' User will be prompted for the password to the FDEP Oracle Database GWIS.
 #' Replaces measurement values with 'NA' for those measurements having any of
 #'  the following fatal data qualifiers: '?,O,N,T,X'.
-#' Replaces measurement values with 'NA' for those coliform measurements which
-#'  have reported values above the criteria (2 for fecal, 4 for total) and are
-#'  listed as below detection ('U' qualifier).
 #' Definitions for these codes may be found in FS 62-160.700 Table 1 (Data Qualifier Codes).
 #' This function produce extraneous columns in the pivoted data frame if there are
 #'  multiple values for the same parameter for a single sample. The users will get a
@@ -18,21 +15,21 @@
 #'  team for resolution.
 #'
 #'
-#' @param arg2 variable passed into SQL select statement to pull data and name data frame
+#' @param arg1 variable passed into SQL select statement to pull data and name data frame
 #' @import RODBC
-#' @import RODM
 #' @import dplyr
 #' @import tidyr
 #' @import splitstackshape
 #' @import stringr
 #' @export
 #' @examples getdata_results("'CN18'")
-#'    entering "'CN18'" for arg2 will produce a data frame for FDEP Status Canals sampled in 2018.
+#'    entering "'CN18'" for arg1 will produce a data frame for FDEP Status Canals sampled in 2018.
+#'
 #'getdata_results("'CN18','CN19','CN20'")
-#'    entering "'CN18','CN19','CN20'" for arg2 will produce a data frame for FDEP Status Canals sampled 2018 - 2020.
+#'    entering "'CN18','CN19','CN20'" for arg1 will produce a data frame for FDEP Status Canals sampled 2018 - 2020.
 #'
 
-getdata_results <- function(arg2) {
+getdata_results <- function(arg1) {
 
   # Create odbc connection run data pull script
 
@@ -56,7 +53,7 @@ getdata_results <- function(arg2) {
     chr(91),''),chr(93),'') parameter,value, value_qualifier
         from t_sample s,t_parameter p,t_result r
               where pk_sample = fk_sample and pk_param_code = fk_param_code
-              and fk_param_code <> 99982 and substr(fk_project,3,4) in (",arg2,")
+              and fk_param_code <> 99982 and substr(fk_project,3,4) in (",arg1,")
                                   order by fk_random_sample_location"))
 
   # Replace measurement values with 'NA' for those measurements having any of
@@ -81,16 +78,18 @@ getdata_results <- function(arg2) {
   ColCount <- ncol(Results_PIVOT)
   ColCount
 
-  ##Split column 6 through end. Result is two columns for each parameter, value followed by VQ.
-  Results_PIVOT_SPLIT  <- cSplit(Results_PIVOT, splitCols = 6:ColCount, "|")
+  ##Split column 7 through end. Result is two columns for each parameter, value followed by VQ.
+  Results_PIVOT_SPLIT  <- cSplit(Results_PIVOT, splitCols = 7:ColCount, "|")
 
   ##Rename columns with value data by removing the "_1" suffix.
-  ##11/30/2020 - Replaced soft depricated function rename_at with gsub.
-  names(Results_PIVOT_SPLIT) <- gsub("_1","",names(Results_PIVOT_SPLIT), fixed=TRUE)
+  ##11/30/2020 - Replaced soft deprecated function rename_at with gsub.
+  ##02/17/2023 - Updated pattern matching in gsub statement to better accommodate analyte names that include numbers.
+  names(Results_PIVOT_SPLIT) <- gsub('_1$','',names(Results_PIVOT_SPLIT))
 
   ##Rename columns with VQ data by changing the "_2" suffix to "_VQ".
-  ##11/30/2020 - Replaced soft depricated function rename_at with gsub.
-  names(Results_PIVOT_SPLIT) <- gsub("_2","_VQ",names(Results_PIVOT_SPLIT), fixed=TRUE)
+  ##11/30/2020 - Replaced soft deprecated function rename_at with gsub.
+  ##02/17/2023 - Updated pattern matching in gsub statement to better accommodate analyte names that include numbers.
+  names(Results_PIVOT_SPLIT) <- gsub('_2$','_VQ',names(Results_PIVOT_SPLIT))
 
   ##11/30/2020 - Replace period in column names with single underscore.
   names(Results_PIVOT_SPLIT) <- gsub(".","_",names(Results_PIVOT_SPLIT), fixed=TRUE)
@@ -98,17 +97,21 @@ getdata_results <- function(arg2) {
   ##11/30/2020 - Replace double underscore in column names with single underscore.
   names(Results_PIVOT_SPLIT) <- gsub("__","_",names(Results_PIVOT_SPLIT), fixed=TRUE)
 
-  ##Can then rename resulting data table to someting shorter if desired. For example:
+  ##Can then rename resulting data table to something shorter if desired. For example:
   Results <- Results_PIVOT_SPLIT
 
   Results <<- Results
   View(Results)
 
-  ##11/30/2020 - Modified CSV file naming. Name is now value of arg2 without quotes.
-  # Designated underscore as seperator in paste funcitons.
-  # For 3 year analysis, portions of arg2 are seperated by underscores (e.g. CN18_CN19_CN20_Results.csv).
-  arg3 <- ifelse(str_length(arg2) > 6, paste(substr(arg2, 2, 5), substr(arg2, 9, 12),
-                                             substr(arg2, 16, 19), sep = "_"),substr(arg2, 2, 5))
+  ##11/30/2020 - Modified CSV file naming. Name is now value of arg1 without quotes.
+  # Designated underscore as separator in paste functions.
+  # For multi-year analysis, portions of arg1 are separated by underscores (e.g. CN18_CN19_CN20_Results.csv).
+  # 02/17/2023 - Modified CSV file naming to support scenarios where arg1 contains
+  #              more than 3 resource and year identifiers.
+  #              Removed row names from CSV file output.
 
-  write.csv(Results,file = (paste(arg3,"Results.csv", sep = "_")))
+  arg2 <- gsub("'", "", arg1)
+  arg2 <- gsub(",", "_", arg2)
+
+  write.csv(Results,file = (paste(arg2,"Results.csv", sep = "_")), row.names = FALSE)
 }

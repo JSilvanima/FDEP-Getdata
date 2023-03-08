@@ -7,7 +7,7 @@
 getdata_fw_exclusions(arg1)
 }
 \arguments{
-\item{arg1}{variable passed into SQL select statement to pull data and name data frame}
+\item{arg1}{variable passed into SQL select statement to pull data and name CSV file output}
 }
 \description{
 Creates flowing waters site evaluation dataframe from oracle data pull.
@@ -22,6 +22,8 @@ Function to import flowing waters site evaluation information into R data frame
 \examples{
 getdata_fw_exclusions("'CN18'")
    entering "'CN18'" for arg1 will produce a data frame for FDEP Status canals sampled in 2018.
+
+getdata_fw_exclusions("'CN18','CN19','CN20'")
    entering "'CN18','CN19','CN20'" for arg1 will produce a data frame for FDEP
    Status canals sampled 2018 - 2020.
 
