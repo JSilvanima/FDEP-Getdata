@@ -9,6 +9,7 @@
 #' @param arg1 Variable passed into SQL select statement to indicate water resources
 #' for data pull.
 #' @param arg2 Variable passed into SQL select statement to indicate start date for data pull.
+#' @param arg3 Variable passed into SQL select statement to indicate end date for data pull.
 #'
 #' @import RODBC
 #' @import sqldf
@@ -18,24 +19,29 @@
 #' @import stringr
 #'
 #' @export
-#' @examples getdata_trend_results("'AQUIFER','SPRING'","'01-OCT-1998'")
-#'    Entering "'AQUIFER','SPRING'","'01-OCT-1998'" for arg1, arg2
-#'    will produce a data frame for all FDEP Trend Network ground water stations
-#'    for data collect from 1998 to current, 2) a dataframe of those data which
-#'    are duplicated in the GWIS database. That is IF there is more than one value for
-#'    each station, collection date, parameter combination, and 3) a dataframe of the
-#'    surface water trend data which excludes the duplicates.
+#' @examples getdata_trend_results("'AQUIFER','SPRING'","'01-OCT-1998'","'31-DEC-2022'")
+#'    Entering "'AQUIFER','SPRING'","'01-OCT-1998'","'31-DEC-2022'" for arg1, arg2, arg3
+#'    will produce:
+#'    1) A data frame for all FDEP Trend Network ground water stations
+#'    for data collect from October 1, 1998 to December 31, 2022.
+#'    2) A dataframe of those data which are duplicated in the GWIS database. That is IF
+#'    there is more than one value for each station, collection date, parameter combination.
+#'    3) A dataframe of the surface water trend data which excludes the duplicates.
 #'
-#'getdata_trend_results("'CANAL','SPRING RUN','STREAM'","'01-OCT-1998'")
-#'    Entering getdata_trend_results("'CANAL','SPRING RUN','STREAM'","'01-OCT-1998'") will produce
-#'    three dataframes, similar to the above for all FDEP Trend Network surface water stations.
+#'getdata_trend_results("'CANAL','SPRING RUN','STREAM'","'01-OCT-1998'","'31-DEC-2022'")
+#'    Entering getdata_trend_results("'CANAL','SPRING RUN','STREAM'","'01-OCT-1998'","'31-DEC-2022'")
+#'    will produce three dataframes, similar to the above for all FDEP Trend Network surface water stations.
 #'
-#'getdata_trend_results("'CANAL'","'01-OCT-1998'")
-#'    Entering getdata_trend_results("'CANAL'","'01-OCT-1998'") will produce three
+#'getdata_trend_results("'CANAL'","'01-OCT-1998'","'31-DEC-2022'")
+#'    Entering getdata_trend_results("'CANAL'","'01-OCT-1998'","'31-DEC-2022'") will produce three
 #'    dataframes, similar to the above for only FDEP Trend Network canal stations.
 #'
 
-getdata_trend_results <- function(arg1,arg2) {
+getdata_trend_results <- function(arg1,arg2,arg3) {
+  # 08/03/2023 - Modified function by adding variable for user-supplied end date for data retrieval,
+  #             making retrieval dates inclusive (includes data from the specified dates),
+  #             and limiting data retrieval to Trend Network projects as defined by
+  #             t_project.fk_super_project = 'SW-TREND' or 'GW-TREND'.
 
   # Create odbc connection run data pull script
 
@@ -46,28 +52,32 @@ getdata_trend_results <- function(arg1,arg2) {
   # User will then be promoted for the password for the oracle database GWIS_ADMIN
   # A SQL query is then run to pull, pivot, and and create the data frame Results.
 
-  Trend_All_Data<-sqlQuery(channel,paste("select pk_station, pk_result, collection_date, sample_type, t_sample.matrix,
+  Trend_All_Data<-sqlQuery(channel,paste("select pk_station, pk_result, fk_project, collection_date, sample_type, t_sample.matrix,
     replace(replace(replace(replace(replace(replace(replace(replace(replace(parameter,
     chr(39),''),chr(44),''),chr(43),''),chr(45),'_'),chr(32),'_'),chr(40),''),chr(41),''),
     chr(91),''),chr(93),'') parameter,value, value_qualifier
-    from t_station, t_sample,t_parameter,t_result
-       where (pk_station = fk_station and pk_sample = fk_sample and pk_param_code = fk_param_code)
+    from t_station, t_sample,t_parameter,t_result, t_project
+       where (pk_station = fk_station and pk_sample = fk_sample and pk_param_code = fk_param_code and pk_project = fk_project)
         and t_station.waterbody_type in (",arg1,")
         and t_sample.sample_type = 'PRIMARY'
-        and t_sample.collection_date > ",arg2,"
+        and t_sample.collection_date >= ",arg2,"
+        and t_sample.collection_date <= ",arg3,"
+        and t_project.fk_super_project in ('GW-TREND','SW-TREND')
         and t_result.value is not null
         and fk_param_code <> 99982
         and SAMPLED_TV_STATIONS = 'A'
   Union
-    Select pk_station, pk_result, collection_date, sample_type, t_sample.matrix,
+    Select pk_station, pk_result, fk_project, collection_date, sample_type, t_sample.matrix,
     replace(replace(replace(replace(replace(replace(replace(replace(replace(parameter,
     chr(39),''),chr(44),''),chr(43),''),chr(45),'_'),chr(32),'_'),chr(40),''),chr(41),''),
     chr(91),''),chr(93),'') parameter,value, value_qualifier
-    from t_station, t_sample,t_parameter,t_result
-       where (pk_station = fk_station and pk_sample = fk_sample and pk_param_code = fk_param_code)
+    from t_station, t_sample,t_parameter,t_result, t_project
+       where (pk_station = fk_station and pk_sample = fk_sample and pk_param_code = fk_param_code and pk_project = fk_project)
         and t_station.waterbody_type in (",arg1,")
         and t_sample.sample_type = 'PRIMARY'
-        and t_sample.collection_date > ",arg2,"
+        and t_sample.collection_date >= ",arg2,"
+        and t_sample.collection_date <= ",arg3,"
+        and t_project.fk_super_project in ('GW-TREND','SW-TREND')
         and t_result.value is not null
         and fk_param_code <> 99982
         and pk_station in (3506,3561,3570)"))
@@ -86,12 +96,13 @@ getdata_trend_results <- function(arg1,arg2) {
   Trend_All_Data <<- Trend_All_Data
 
   # Reformat information in arg1 and arg2 for use in CSV file names.
-  arg3 <- gsub("'", "", arg1)
-  arg3 <- gsub(",", "_", arg3)
-  arg4 <- gsub("'", "", arg2)
+  arg4 <- gsub("'", "", arg1)
+  arg4 <- gsub(",", "_", arg4)
+  arg5 <- gsub("'", "", arg2)
+  arg6 <- gsub("'", "", arg3)
 
   # Export Trend_All_Data.
-  write.csv(Trend_All_Data, file = (paste(arg3,arg4,'Trend_All_Data.csv',sep = "_")), row.names = FALSE)
+  write.csv(Trend_All_Data, file = (paste(arg4,arg5,arg6,'Trend_All_Data.csv',sep = "_")), row.names = FALSE)
 
   duplicates <- sqldf('select * from Trend_All_Data
                     where PK_STATION||COLLECTION_DATE||PARAMETER
@@ -102,7 +113,7 @@ getdata_trend_results <- function(arg1,arg2) {
   duplicates <<- duplicates
 
   # Export duplicates for GWIS corrections.
-  write.csv(duplicates, file = (paste(arg3,arg4,'DUPLICATES.csv',sep = "_")), row.names = FALSE)
+  write.csv(duplicates, file = (paste(arg4,arg5,arg6,'DUPLICATES.csv',sep = "_")), row.names = FALSE)
 
   # Remove duplicates from Trend_All_Data dataframe
   Results <- sqldf('select * from Trend_All_Data
@@ -111,7 +122,7 @@ getdata_trend_results <- function(arg1,arg2) {
   Results_Stacked <<- Results
 
   # Export data after duplicates have been removed.
-  write.csv(Results, file = (paste(arg3,arg4,'Results_Stacked.csv',sep = "_")), row.names = FALSE)
+  write.csv(Results, file = (paste(arg4,arg5,arg6,'Results_Stacked.csv',sep = "_")), row.names = FALSE)
 
   ##Create new column with value & qualifier concatenated and seperated by a pipe symbol.
   Results$VALUE_VALUE_QUALIFIER<-paste(Results$VALUE,"|",Results$VALUE_QUALIFIER)
@@ -157,5 +168,5 @@ getdata_trend_results <- function(arg1,arg2) {
   View(Results_Pivoted)
 
   # Export data after duplicates have been removed and data have been pivoted.
-  write.csv(Results_Pivoted,file = (paste(arg3,arg4,'Results_Pivoted.csv',sep = "_")), row.names = FALSE)
+  write.csv(Results_Pivoted,file = (paste(arg4,arg5,arg6,'Results_Pivoted.csv',sep = "_")), row.names = FALSE)
 }

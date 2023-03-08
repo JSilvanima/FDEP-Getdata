@@ -1,8 +1,8 @@
 Package: FDEPgetdata
 Type: Package
 Title: Retrieves and reformats data for data analyses
-Version: 1.10
-Date: 2023-03-08
+Version: 1.11
+Date: 2023-08-03
 Authors@R: c(person(given = "Jay", family = "Silvanima", role = c("aut", "cre"), 
                 email = "James.Silvanima@dep.state.fl.us",
                 comment = c(ORCID = "https://orcid.org/0000-0002-5612-8025")),
