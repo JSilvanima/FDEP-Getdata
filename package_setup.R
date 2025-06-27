@@ -1,8 +1,15 @@
-setwd("C:/R/packages/FDEPgetdata")
+#setwd("C:/R/packages/FDEPgetdata")
 
 library(devtools)
 library(roxygen2)
-library(RODBC)
+library(odbc)
+library(sf)
+library(dplyr)
+library(tidyr)
+library(splitstackshape)
+library(stringr)
+library(sqldf)
+library(rstudioapi)
 
 document()
 
@@ -20,11 +27,19 @@ getdata_lake_exclusions("'LL19'")
 
 getdata_results("'CA18','CA19','CA20'")
 
-getdata_trend_results("'AQUIFER','SPRING'","'01-OCT-1998'")
+getdata_trend_results("'AQUIFER','SPRING'","'01-OCT-1998'","'31-DEC-2022'")
+
+getdata_fw_site_removals(site_evaluations = Exclusions,
+                         listframe_directory = "./data",
+                         listframe = "Cycle17_streams_coverage_2023")
+
+getdata_lake_site_removals(site_evaluations = Exclusions,
+                           listframe_directory = "./data",
+                           listframe = "Cycle17_LargeLakes_coverage_2023")
 
 uninstall(pkg = "FDEPgetdata")
 
 uninstall.
 
 
-import(RODBC, dplyr, tidyr, splitstackshape, stringr, sqldf)
+import(odbc, dplyr, tidyr, splitstackshape, stringr, sqldf, sf, rstudioapi)

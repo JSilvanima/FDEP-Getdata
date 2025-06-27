@@ -4,7 +4,7 @@
 \alias{getdata_aq_exclusions_multi_yr}
 \title{getdata_aq_exclusions_multi_yr}
 \usage{
-getdata_aq_exclusions_multi_yr(arg1, arg2, arg3)
+getdata_aq_exclusions_multi_yr(arg1 = NA, arg2 = NA, arg3 = NA)
 }
 \arguments{
 \item{arg1}{Variable passed into SQL select statement to indicate which year's target population

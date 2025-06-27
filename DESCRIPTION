@@ -1,24 +1,25 @@
 Package: FDEPgetdata
 Type: Package
 Title: Retrieves and reformats data for data analyses
-Version: 1.11
-Date: 2023-08-03
+Version: 2.02
+Date: 2024-10-11
 Authors@R: c(person(given = "Jay", family = "Silvanima", role = c("aut", "cre"), 
-                email = "James.Silvanima@dep.state.fl.us",
+                email = "James.Silvanima@FloridaDEP.gov",
                 comment = c(ORCID = "https://orcid.org/0000-0002-5612-8025")),
              person(given = "Stephanie", family = "Sunderman-Barnes",
-                role = c("aut"), email = "Stephanie.SundermanBarnes@dep.state.fl.us"))
-Maintainer: The package maintainer <James.Silvanima@dep.state.fl.us>
-Depends: R (>= 4.1.0), R (< 4.2.0), RODBC, dplyr, tidyr, splitstackshape, stringr, sqldf
-Imports: RODBC, dplyr, tidyr, splitstackshape, stringr, sqldf
+                role = c("aut"), email = "Stephanie.SundermanBarnes@FloridaDEP.gov"))
+Maintainer: The package maintainer <James.Silvanima@FloridaDEP.gov>
+Depends: R (>= 4.1.0), odbc, dplyr, tidyr, splitstackshape, stringr, sqldf, sf, rstudioapi
+Imports: odbc, dplyr, tidyr, splitstackshape, stringr, sqldf, sf, rstudioapi
 Description: Creates odbc connection to Florida Department of 
               Environmental Protection oracle database GWIS. Runs 
               sql queries to retrieve monitoring data collected for the 
               Status Monitoring Network and Trend Monitoring Network. Pivots
-              data prior to creation of data frames. Dependent packages
-              include RODBC, dplyr, tidyr, splitstackshape, and 
-              stringr. The created data frames are used for FDEP data 
-              analyses run via the r packages spsurvey and EnvStats.
+              data prior to creation of data frames. Identifies Status Network
+              sites that are not co-located with a user-supplied listframe GIS coverage.
+              Dependent packages include odbc, dplyr, tidyr, splitstackshape, 
+              stringr, sqldf, sf, and rstudioapi. The created data frames are used 
+              for FDEP data analyses run via the R packages spsurvey and EnvStats.
 License: Null
 Encoding: UTF-8
 LazyData: true

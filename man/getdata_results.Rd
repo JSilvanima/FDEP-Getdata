@@ -4,20 +4,22 @@
 \alias{getdata_results}
 \title{getdata_results}
 \usage{
-getdata_results(arg1)
+getdata_results(arg1 = NA)
 }
 \arguments{
-\item{arg1}{variable passed into SQL select statement to pull data and name data frame}
+\item{arg1}{variable passed into SQL select statement to pull data and name data export}
 }
 \description{
-Creates results data frame from oracle data pull.
+Creates two data frames of results data via
+ oracle data pull.
+   1) Data frame named "Results" contains results data in pivoted (pivot_wider) format.
+   2) Data frame named "Results_Stacked" contains results data in stacked (pivot_longer) format.
 User will be prompted for the password to the FDEP Oracle Database GWIS.
 Replaces measurement values with 'NA' for those measurements having any of
  the following fatal data qualifiers: '?,O,N,T,X'.
 Definitions for these codes may be found in FS 62-160.700 Table 1 (Data Qualifier Codes).
 This function produce extraneous columns in the pivoted data frame if there are
- multiple values for the same parameter for a single sample. The users will get a
- warning error stating the following.  If this occurs contact examine the results data frame.
+ multiple values for the same parameter for a single sample.  If this occurs examine the results data frame.
  Locate the affected samples and investigate further.  Type c(" in the R Studio search bar
  to search the results data frame for the affected samples. Contact data management
  team for resolution.
@@ -27,9 +29,9 @@ Function to import results into R data frame from the FDEP Oracle Database GWIS
 }
 \examples{
 getdata_results("'CN18'")
-   entering "'CN18'" for arg1 will produce a data frame for FDEP Status Canals sampled in 2018.
+   entering "'CN18'" for arg1 will produce data frames for FDEP Status Canals sampled in 2018.
 
 getdata_results("'CN18','CN19','CN20'")
-   entering "'CN18','CN19','CN20'" for arg1 will produce a data frame for FDEP Status Canals sampled 2018 - 2020.
+   entering "'CN18','CN19','CN20'" for arg1 will produce data frames for FDEP Status Canals sampled 2018 - 2020.
 
 }

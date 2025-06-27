@@ -4,7 +4,7 @@
 \alias{getdata_lake_exclusions}
 \title{getdata_lake_exclusions}
 \usage{
-getdata_lake_exclusions(arg1)
+getdata_lake_exclusions(arg1 = NA)
 }
 \arguments{
 \item{arg1}{variable passed into SQL select statement to pull data and name CSV file output}

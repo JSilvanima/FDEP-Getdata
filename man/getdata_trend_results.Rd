@@ -4,7 +4,7 @@
 \alias{getdata_trend_results}
 \title{getdata_trend_results}
 \usage{
-getdata_trend_results(arg1, arg2, arg3)
+getdata_trend_results(arg1 = NA, arg2 = NA, arg3 = NA)
 }
 \arguments{
 \item{arg1}{Variable passed into SQL select statement to indicate water resources
@@ -15,29 +15,35 @@ for data pull.}
 \item{arg3}{Variable passed into SQL select statement to indicate end date for data pull.}
 }
 \description{
-Creates dataframe of either surface or groundwater trend network site data via
+Creates data frames of either surface or groundwater trend network results data via
  oracle data pull. User will be prompted for the password to the FDEP Oracle Database GWIS.
+ Replaces measurement values with 'NA' for those measurements having any of
+ the following fatal data qualifiers: '?,O,N,T,X'.
+ Definitions for these codes may be found in FS 62-160.700 Table 1 (Data Qualifier Codes).
 }
 \details{
-Function to pull GWIS data for trend network data analyses
-Create date 02/03/2023
+Function to pull GWIS data for trend network data analyses.
+Create date 02/03/2023.
 }
 \examples{
 getdata_trend_results("'AQUIFER','SPRING'","'01-OCT-1998'","'31-DEC-2022'")
    Entering "'AQUIFER','SPRING'","'01-OCT-1998'","'31-DEC-2022'" for arg1, arg2, arg3
-   will produce:
-   1) A data frame for all FDEP Trend Network ground water stations
-   for data collect from October 1, 1998 to December 31, 2022.
-   2) A dataframe of those data which are duplicated in the GWIS database. That is IF
-   there is more than one value for each station, collection date, parameter combination.
-   3) A dataframe of the surface water trend data which excludes the duplicates.
+   will produce four data frames:
+   1) A data frame named "Trend_All_Data" for all FDEP Trend Network groundwater stations
+   for data collected from October 1, 1998 to December 31, 2022.
+   2) A data frame named "duplicates" of those data which are duplicated in the GWIS database. Duplicates are defined
+   as more than one value for each station, collection date, parameter combination.
+   3) A data frame named "Results_Stacked", in stacked (pivot_longer) format, of the groundwater trend data which
+   excludes the duplicates.
+   4) A data frame named "Results_Pivoted", in pivoted (pivot_wider) format, of the groundwater trend data which
+   excludes the duplicates.
 
 getdata_trend_results("'CANAL','SPRING RUN','STREAM'","'01-OCT-1998'","'31-DEC-2022'")
    Entering getdata_trend_results("'CANAL','SPRING RUN','STREAM'","'01-OCT-1998'","'31-DEC-2022'")
-   will produce three dataframes, similar to the above for all FDEP Trend Network surface water stations.
+   will produce four data frames, similar to the above for all FDEP Trend Network surface water stations.
 
 getdata_trend_results("'CANAL'","'01-OCT-1998'","'31-DEC-2022'")
-   Entering getdata_trend_results("'CANAL'","'01-OCT-1998'","'31-DEC-2022'") will produce three
-   dataframes, similar to the above for only FDEP Trend Network canal stations.
+   Entering getdata_trend_results("'CANAL'","'01-OCT-1998'","'31-DEC-2022'") will produce four
+   data frames, similar to the above for only FDEP Trend Network canal stations.
 
 }
